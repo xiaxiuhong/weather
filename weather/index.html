@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <title>天气预报</title>
+    <script src="js/jquery-3.1.0.js"></script>
+    <script>
+        $(function(){
+            //更新时间
+            var oDate=new Date();
+            var month=oDate.getMonth();
+
+            //获取数据
+            function change(){
+                var city=$("select option:selected").val();
+                var url ="http://wthrcdn.etouch.cn/weather_mini?city="+city;
+
+                //天气图标
+                function getIcon(weaIcon){
+                    var icon="day_qing.png";
+                    var icons={
+                        "大雪":"day_daxue.png",
+                        "大雨":"day_dayu.png",
+                        "晴":"day_qing.png",
+                        "阴":"day_yin.png",
+                        "多云":"day_duoyun.png",
+                        "小雪":"day_xiaoxue.png",
+                        "小雨":"day_xiaoyu.png",
+                        "中雪":"day_zhongxue.png",
+                        "中雨":"day_zhongyu.png",
+                        "霾":"day_yin.png"
+                    };
+                    return icons[weaIcon] || icon;
+                }
+
+                //json数据
+                $.getJSON(url,function(wea){
+                    var info= wea.data;
+                    var content1="";
+                    content1+= "<div class='temp'>"+info.wendu+"°</div>"+
+                            "<div class='aqi'><p>空气质量指数："+info.aqi+"</p><p>风力："+info.forecast[0].fengli+"</p></div>";
+                    $("#disCont .weaTop").html(content1);
+
+                    var content2="";
+                    content2+="<p>"+(oDate.getHours()<10 ? "0"+oDate.getHours() : oDate.getHours())+":"+(oDate.getMinutes()<10?"0"+oDate.getMinutes():oDate.getMinutes())+"  更新</p>";
+                    $(".upTime").html(content2);
+
+                    var content3="";
+                    content3+="<p>感冒指数："+info.ganmao+"</p>";
+                    $(".notice").html(content3);
+
+                    for( var i=0; i<info.forecast.length;i++){
+                        var infoI=wea.data.forecast[i];
+
+                        var p1="<p>"+(month+1)+"月"+infoI.date.substring(0,2)+"</p>";
+                        var p2="<p>"+infoI.date.substring(2,6)+"</p>";
+                        var p3="<p>"+infoI.type+"</p>";
+                        var p4="<p><img src='images/"+getIcon(infoI.type)+"'/>"+"</p>";
+                        var p5="<p>"+infoI.low.substring(3,6)+"～"+infoI.high.substring(3,6)+"</p>";
+                        var p6="<p>"+infoI.fengli+"</p>";
+
+                        $(".weaDetail li")[i].innerHTML=p1+p2+p3+p4+p5+p6;
+                    }
+                });
+            }
+            change();
+
+            //下拉切换
+            $("#city").change(function(){
+                change();
+            });
+
+            //背景动画
+            var images=["qing01.jpg","yu02.jpg","yin02.jpg","yu01.jpg","xue01.jpg"];
+            var index=1;
+            setInterval(function(){
+                if (index==images.length) index=0;
+                $(".background").animate({"opacity":0},1500,function(){
+                    $(".background").css("backgroundImage",'url("images/'+images[index]+'")')
+                            .animate({"opacity":1},1500);
+                    index++;
+                })
+            },8000);
+        });
+    </script>
+</head>
+<body>
+<div class="background"></div>
+<div class="text-frame">
+<div id="weather">
+    <div id="title">
+        <i class="fa-map-marker"></i>
+        <select id="city">
+            <option value="上海">上海</option>
+            <option value="北京">北京</option>
+            <option value="哈尔滨">哈尔滨</option>
+            <option value="昆明">昆明</option>
+            <option value="广州">广州</option>
+            <option value="长春">长春</option>
+            <option value="海口">海口</option>
+            <option value="深圳">深圳</option>
+            <option value="长沙">长沙</option>
+            <option value="南京">南京</option>
+            <option value="大连">大连</option>
+        </select>
+    </div>
+    <div id="disCont">
+        <div>
+            <div class="weaTop">
+                <div class="temp"></div>
+                <div class="aqi"><p></p></div>
+            </div>
+            <div class="ganmao">
+                <p class="upTime"></p>
+                <p class="notice"></p>
+            </div>
+            <ul class="weaDetail">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

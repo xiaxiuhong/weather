@@ -1,0 +1,33 @@
+*{ margin: 0; padding: 0;}
+ul{ list-style: none;}
+.background { background: url("../images/qing01.jpg")  no-repeat center center fixed;
+    -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;
+    background-size: cover; position: absolute; top: 0; bottom: 0; left: 0; right: 0;  }
+.text-frame { position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+#weather{ width:470px; background-color: #ccc; position: absolute; top: 20px; right:50px;}
+#weather:before{ content:""; height: 0; width: 0; border: 20px solid yellowgreen; border-top-color:#ccc;
+    border-left-color:#ccc; position: absolute; right: 0; bottom: 0;}
+#weather:after{ content: ""; height: 0; width: 0; border: 15px solid transparent; border-right-color:#ccc;
+    border-bottom-color:#ccc; position: absolute;right: 6px; bottom: 6px;}
+#title{ height: 60px; background-color:#5E86E3; padding-left: 50px; position: relative;  }
+#title:before{ content:""; height: 0; width: 0; border: 20px solid yellowgreen; border-bottom-color:#5E86E3;
+    border-right-color:#5E86E3; position: absolute; left: 0; top: 0;}
+#title:after{ content: ""; height: 0; width: 0; border: 15px solid transparent; border-left-color:#5E86E3;
+    border-top-color:#5E86E3; position: absolute; left: 6px; top: 6px;}
+#title i{ font:24px/60px 'FontAwesome';font-style: normal; margin-right: 10px; color: #fff;}
+#city{ height:30px; padding:0 10px; font:20px/30px "microsoft yahei";border:1px solid #999;
+    border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
+#city option{ padding-left: 10px;}
+
+#disCont{ padding:0 10px;}
+.weaTop{ height: 120px;border-bottom: 1px solid #999; }
+.temp{ width:250px;height: 120px; float: left; font-size:90px; color: #043567; padding-left: 30px;}
+.aqi{ float: left; padding-top: 15px;}
+.aqi p{ font:600 20px/40px "microsoft yahei"; color:#043567}
+.ganmao{ height: 100px; padding-left: 15px;}
+.upTime{ font: 18px/30px "microsoft yahei";padding-top:5px;color: mediumvioletred}
+.notice{ font: 16px/30px "microsoft yahei"}
+#disCont .weaDetail{  padding-top:10px; height: 250px;}
+.weaDetail li{ float: left; width:89px;border-right: 1px solid #999; padding:5px 0; height: 100%;}
+.weaDetail li:last-child{ border-right: none;}
+.weaDetail li p{ text-align: center; font:600 15px/30px "simsun"; color:#16141F}
